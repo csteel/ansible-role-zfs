@@ -1,0 +1,43 @@
+- hosts: all
+  become: true
+  gather_facts: false
+
+  pre_tasks:
+
+    - set_fact: fact_controller_user="{{ lookup('env','USER') }}"
+    - debug: var=fact_controller_user
+
+    - set_fact: fact_controller_home="{{ lookup('env','HOME') }}"
+    - debug: var=fact_controller_home
+
+    - set_fact: fact_role_path="{{ lookup('pipe','pwd')|dirname }}"
+    - debug: var=fact_role_path
+
+    - name: "Ensure that our target has python2.x for Ansible gather facts as some Ubuntu 16.04 vagrant boxes do not)"
+      become_user: root
+      raw: bash -c "test -e /usr/bin/python || (apt -qqy update && apt install -qqy python-minimal)"
+      register: output
+      changed_when:
+       - output.stdout != ""
+       - output.stdout != "\r\n"
+      ignore_errors: yes
+
+    - name: "Now that we are sure Python 2.7 is installed we can gather our facts"
+      setup:
+
+- name: Installs ZFS On Linux
+  hosts: all
+  become: true
+  gather_facts: true
+  vars:
+    - zfs_enable_nfs: true
+    - zfs_pools: 
+      - name: tank_001
+        compression: 'lz4'
+        devices:  #define devices to create pool with...can define multiple by | sdb sdc sdd sde sdf | all on one line w/spaces
+          - '/dev/sdb'
+          - '/dev/sdc'
+        type: mirror  #define pool type... | basic (no-raid) | mirror | raidz | raidz2 | raidz3
+        state: present
+  roles:
+    - ../../
