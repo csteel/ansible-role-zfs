@@ -38,7 +38,17 @@ License
 
 BSD
 
-Author Information
+## Author Information
+
+Larry Smith Jr.
+
+- @mrlesmithjr
+- <http://everythingshouldbevirtual.com>
+- mrlesmithjr [at] gmail.com
+
+BSD
+
+Modifier Information
 ------------------
 
 Christopher Steel
