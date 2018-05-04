@@ -1,0 +1,32 @@
+       zpool status [-gLPvxD] [-T d | u] [pool] ... [interval [count]]
+
+           Displays the detailed health status for the given pools. If no pool is specified, then the status of each pool in the system  is
+           displayed. For more information on pool and device health, see the "Device Failure and Recovery" section.
+
+           If  a  scrub  or resilver is in progress, this command reports the percentage done and the estimated time to completion. Both of
+           these are only approximate, because the amount of data in the pool and the other workloads on the system can change.
+
+           -g          Display vdev GUIDs instead of the normal device names. These GUIDs can be used innplace  of  device  names  for  the
+                       zpool detach/offline/remove/replace commands.
+
+           -L          Display real paths for vdevs resolving all symbolic links. This can be used to look up the current block device name
+                       regardless of the /dev/disk/ path used to open it.
+
+           -P          Display full paths for vdevs instead of only the last component of the path.  This can be used in  conjunction  with
+                       the -L flag.
+
+           -v          Displays  verbose  data  error  information, printing out a complete list of all data errors since the last complete
+                       pool scrub.
+
+           -x          Only display status for pools that are exhibiting errors or are otherwise  unavailable.  Warnings  about  pools  not
+                       using the latest on-disk format will not be included.
+
+           -D          Display  a  histogram of deduplication statistics, showing the allocated (physically present on disk) and referenced
+                       (logically referenced in the pool) block counts and sizes by reference count.
+
+           -T d | u    Display a time stamp.
+
+                       Specify u for a printed representation of the internal representation of time. See time(2). Specify d  for  standard
+                       date format. See date(1).
+
+

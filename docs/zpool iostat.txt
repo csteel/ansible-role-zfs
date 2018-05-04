@@ -1,0 +1,26 @@
+       zpool iostat [-T d | u] [-gLPvy] [pool] ... [interval[count]]
+
+           Displays  I/O  statistics  for  the given pools. When given an interval, the statistics are printed every interval seconds until
+           Ctrl-C is pressed. If no pools are specified, statistics for every pool in the system is shown. If count is specified, the  com-
+           mand exits after count reports are printed.
+
+           -T u | d    Display a time stamp.
+
+                       Specify  u  for a printed representation of the internal representation of time. See time(2). Specify d for standard
+                       date format. See date(1).
+
+           -g          Display vdev GUIDs instead of the normal device names. These GUIDs can be used in place  of  device  names  for  the
+                       zpool detach/offline/remove/replace commands.
+
+           -L          Display real paths for vdevs resolving all symbolic links. This can be used to look up the current block device name
+                       regardless of the /dev/disk/ path used to open it.
+
+           -P          Display full paths for vdevs instead of only the last component of the path.  This can be used in  conjunction  with
+                       the -L flag.
+
+           -v          Verbose statistics. Reports usage statistics for individual vdevs within the pool, in addition to the pool-wide sta-
+                       tistics.
+
+           -y          Omit statistics since boot.  Normally the first line of output reports the statistics since boot.  This option  sup-
+                       presses that first line of output.
+

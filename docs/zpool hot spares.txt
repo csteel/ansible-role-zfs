@@ -1,0 +1,171 @@
+       Example 11 Managing Hot Spares
+
+       The following command creates a new pool with an available hot spare:
+
+         # zpool create tank mirror sda sdb spare sdc
+
+       If  one of the disks were to fail, the pool would be reduced to the degraded state. The failed device can be replaced using the fol-
+       lowing command:
+
+### zpool replace 
+
+usage:
+	replace [-f] [-o property=value] <pool> <device> [new-device]
+
+```shell
+zpool replace tank sdb sdw
+```
+
+Check your status:
+
+```shell
+zpool status
+```
+
+In this case:
+
+* a mirror called **spare-0** of the drive being replaced is created using the spare drive.
+* The spare drive is resilvered and shows up in the new mirror.
+* In the **spares** section our spare device now shows up as **INUSE**.
+
+Output example:
+
+```shell
+  pool: tank
+ state: ONLINE
+  scan: resilvered 10.5K in 0h0m with 0 errors on Fri May  4 18:54:36 2018
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	tank         ONLINE       0     0     0
+	  raidz2-0   ONLINE       0     0     0
+	    spare-0  ONLINE       0     0     0
+	      sdb    ONLINE       0     0     0
+	      sdw    ONLINE       0     0     0
+	    sdc      ONLINE       0     0     0
+	    sdd      ONLINE       0     0     0
+	    sde      ONLINE       0     0     0
+	    sdf      ONLINE       0     0     0
+	    sdg      ONLINE       0     0     0
+	    sdh      ONLINE       0     0     0
+	  raidz2-1   ONLINE       0     0     0
+	    sdi      ONLINE       0     0     0
+	    sdj      ONLINE       0     0     0
+	    sdk      ONLINE       0     0     0
+	    sdl      ONLINE       0     0     0
+	    sdm      ONLINE       0     0     0
+	    sdn      ONLINE       0     0     0
+	    sdo      ONLINE       0     0     0
+	  raidz2-2   ONLINE       0     0     0
+	    sdp      ONLINE       0     0     0
+	    sdq      ONLINE       0     0     0
+	    sdr      ONLINE       0     0     0
+	    sds      ONLINE       0     0     0
+	    sdt      ONLINE       0     0     0
+	    sdu      ONLINE       0     0     0
+	    sdv      ONLINE       0     0     0
+	spares
+	  sdw        INUSE     currently in use
+```
+
+Remove
+
+`zpool remove` does not work in this case:
+
+```shell
+zpool remove tank sdb
+```
+
+Error output:
+```shell
+cannot remove sdb: only inactive hot spares, cache, top-level, or log devices can be removed
+```
+
+but `zpool detach` does as follows:
+
+Detach
+
+```shell
+zpool detach tank sdb
+```
+
+Looking at our status we see that the drive is now removed 
+
+```shell
+zpool status
+```
+
+```shell
+  pool: tank
+ state: ONLINE
+  scan: resilvered 10.5K in 0h0m with 0 errors on Fri May  4 18:54:36 2018
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	tank        ONLINE       0     0     0
+	  raidz2-0  ONLINE       0     0     0
+	    sdw     ONLINE       0     0     0
+	    sdc     ONLINE       0     0     0
+	    sdd     ONLINE       0     0     0
+	    sde     ONLINE       0     0     0
+	    sdf     ONLINE       0     0     0
+	    sdg     ONLINE       0     0     0
+	    sdh     ONLINE       0     0     0
+	  raidz2-1  ONLINE       0     0     0
+	    sdi     ONLINE       0     0     0
+	    sdj     ONLINE       0     0     0
+	    sdk     ONLINE       0     0     0
+	    sdl     ONLINE       0     0     0
+	    sdm     ONLINE       0     0     0
+	    sdn     ONLINE       0     0     0
+	    sdo     ONLINE       0     0     0
+	  raidz2-2  ONLINE       0     0     0
+	    sdp     ONLINE       0     0     0
+	    sdq     ONLINE       0     0     0
+	    sdr     ONLINE       0     0     0
+	    sds     ONLINE       0     0     0
+	    sdt     ONLINE       0     0     0
+	    sdu     ONLINE       0     0     0
+	    sdv     ONLINE       0     0     0
+```
+
+## 
+
+ zpool add tank spare /dev/sdb
+root@vagrant:~# zpool status
+  pool: tank
+ state: ONLINE
+  scan: resilvered 10.5K in 0h0m with 0 errors on Fri May  4 18:54:36 2018
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	tank        ONLINE       0     0     0
+	  raidz2-0  ONLINE       0     0     0
+	    sdw     ONLINE       0     0     0
+	    sdc     ONLINE       0     0     0
+	    sdd     ONLINE       0     0     0
+	    sde     ONLINE       0     0     0
+	    sdf     ONLINE       0     0     0
+	    sdg     ONLINE       0     0     0
+	    sdh     ONLINE       0     0     0
+	  raidz2-1  ONLINE       0     0     0
+	    sdi     ONLINE       0     0     0
+	    sdj     ONLINE       0     0     0
+	    sdk     ONLINE       0     0     0
+	    sdl     ONLINE       0     0     0
+	    sdm     ONLINE       0     0     0
+	    sdn     ONLINE       0     0     0
+	    sdo     ONLINE       0     0     0
+	  raidz2-2  ONLINE       0     0     0
+	    sdp     ONLINE       0     0     0
+	    sdq     ONLINE       0     0     0
+	    sdr     ONLINE       0     0     0
+	    sds     ONLINE       0     0     0
+	    sdt     ONLINE       0     0     0
+	    sdu     ONLINE       0     0     0
+	    sdv     ONLINE       0     0     0
+	spares
+	  sdb       AVAIL   
+
+errors: No known data errors
+

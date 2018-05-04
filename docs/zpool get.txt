@@ -1,0 +1,18 @@
+
+
+       zpool get [-p] "all" | property[,...] pool ...
+
+           Retrieves  the given list of properties (or all properties if "all" is used) for the specified storage pool(s). These properties
+           are displayed with the following fields:
+
+                    name          Name of storage pool
+                     property      Property name
+                     value         Property value
+                     source        Property source, either 'default' or 'local'.
+
+           See the "Properties" section for more information on the available pool properties.
+
+           -p    Display numbers in parseable (exact) values.
+
+           -H    Scripted mode. Do not display headers, and separate fields by a single tab instead of arbitrary space.
+

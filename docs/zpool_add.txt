@@ -1,3 +1,9 @@
+       Example 5 Adding a Mirror to a ZFS Storage Pool
+
+       The following command adds two mirrored disks to the pool tank, assuming the pool is already made up of two-way mirrors.  The  addi-
+       tional space is immediately available to any datasets within the pool.
+
+         # zpool add tank mirror sda sdb
 
 
        zpool add [-fgLnP] [-o property=value] pool vdev ...

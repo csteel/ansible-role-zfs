@@ -1,0 +1,17 @@
+       zpool scrub [-s] pool ...
+
+           Begins a scrub. The scrub examines all data in the specified pools to verify that it checksums correctly. For replicated (mirror
+           or  raidz)  devices,  ZFS  automatically  repairs any damage discovered during the scrub. The "zpool status" command reports the
+           progress of the scrub and summarizes the results of the scrub upon completion.
+
+           Scrubbing and resilvering are very similar operations. The difference is that resilvering only examines data that ZFS  knows  to
+           be  out  of date (for example, when attaching a new device to a mirror or replacing an existing device), whereas scrubbing exam-
+           ines all data to discover silent errors due to hardware faults or disk failure.
+
+           Because scrubbing and resilvering are I/O-intensive operations, ZFS only allows one  at  a  time.  If  a  scrub  is  already  in
+           progress,  the  "zpool  scrub"  command terminates it and starts a new scrub. If a resilver is in progress, ZFS does not allow a
+           scrub to be started until the resilver completes.
+
+           -s    Stop scrubbing.
+
+

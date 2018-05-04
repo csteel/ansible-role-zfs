@@ -1,0 +1,10 @@
+       zpool history [-il] [pool] ...
+
+           Displays the command history of the specified pools or all pools if no pool is specified.
+
+           -i    Displays internally logged ZFS events in addition to user initiated events.
+
+           -l    Displays log records in long format, which in addition to standard format includes, the user name, the hostname,  and  the
+                 zone in which the operation was performed.
+
+

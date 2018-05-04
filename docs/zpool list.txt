@@ -1,0 +1,41 @@
+       Example 6 Listing Available ZFS Storage Pools
+
+       The following command lists all available pools on the system. In this case, the pool zion is faulted due to a missing device.
+
+       The results from this command are similar to the following:
+
+         # zpool list
+         NAME    SIZE  ALLOC   FREE   FRAG  EXPANDSZ    CAP  DEDUP  HEALTH  ALTROOT
+         rpool  19.9G  8.43G  11.4G    33%         -    42%  1.00x  ONLINE  -
+         tank   61.5G  20.0G  41.5G    48%         -    32%  1.00x  ONLINE  -
+         zion       -      -      -      -         -      -      -  FAULTED -
+
+
+       zpool list [-T d | u] [-HgLPv] [-o props[,...]] [pool] ... [interval[count]]
+
+           Lists the given pools along with a health status and space usage. If no pools are specified, all pools in the system are listed.
+           When given an interval, the information is printed every interval seconds until Ctrl-C is pressed. If count  is  specified,  the
+           command exits after count reports are printed.
+
+           -H          Scripted mode. Do not display headers, and separate fields by a single tab instead of arbitrary space.
+
+           -g          Display  vdev  GUIDs  instead  of  the normal device names. These GUIDs can be used in place of device names for the
+                       zpool detach/offline/remove/replace commands.
+
+           -L          Display real paths for vdevs resolving all symbolic links. This can be used to look up the current block device name
+                       regardless of the /dev/disk/ path used to open it.
+
+           -P          Display  full  paths for vdevs instead of only the last component of the path.  This can be used in conjunction with
+                       the -L flag.
+
+           -T d | u    Display a time stamp.
+
+                       Specify u for a printed representation of the internal representation of time. See time(2). Specify d  for  standard
+                       date format. See date(1).
+
+           -o props    Comma-separated  list  of  properties  to  display. See the "Properties" section for a list of valid properties. The
+                       default list is "name, size, used, available, fragmentation, expandsize, capacity, dedupratio, health, altroot"
+
+           -v          Verbose statistics. Reports usage statistics for individual vdevs within the pool, in addition to the pool-wise sta-
+                       tistics.
+
