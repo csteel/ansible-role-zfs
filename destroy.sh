@@ -1,3 +1,4 @@
 vagrant destroy
-rm zfsDisk_0*
+rm zfsDisk_*
 rm -R .vagrant/
+rm tests/vagrant.retry

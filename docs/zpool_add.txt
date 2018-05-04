@@ -1,0 +1,32 @@
+
+
+       zpool add [-fgLnP] [-o property=value] pool vdev ...
+
+           Adds the specified virtual devices to the given pool. The vdev specification is described in the "Virtual Devices"  sec-
+           tion. The behavior of the -f option, and the device checks performed are described in the "zpool create" subcommand.
+
+           -f    Forces use of vdevs, even if they appear in use or specify a conflicting replication level. Not all devices can be
+                 overridden in this manner.
+
+           -g    Display vdev GUIDs instead of the normal device names. These GUIDs can be used in place of device  names  for  the
+                 zpool detach/offline/remove/replace commands.
+
+           -L    Display  real  paths  for vdevs resolving all symbolic links. This can be used to look up the current block device
+                 name regardless of the /dev/disk/ path used to open it.
+
+           -n    Displays the configuration that would be used without actually adding the vdevs.  The  actual  pool  creation  can
+                 still fail due to insufficient privileges or device sharing.
+
+           -P    Display full paths for vdevs instead of only the last component of the path.  This can be used in conjunction with
+                 the -L flag.
+
+           -o property=value
+
+               Sets the given pool properties. See the "Properties" section for a list of valid properties that  can  be  set.  The
+               only property supported at the moment is ashift.  Do note that some properties (among them ashift) are not inherited
+               from a previous vdev. They are vdev specific, not pool specific.
+
+           Do not add a disk that is currently configured as a quorum device to a zpool. After a disk is in the pool, that disk can
+           then be configured as a quorum device.
+
+

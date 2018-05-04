@@ -1,0 +1,90 @@
+Virtual Devices (vdevs)
+       A "virtual device" describes a single device or a collection of devices
+       organized  according  to certain performance and fault characteristics.
+       The following virtual devices are supported:
+
+       disk
+
+           A block device, typically  located  under  /dev/dsk.  ZFS  can  use
+           individual  slices  or  partitions,  though the recommended mode of
+           operation is to use whole disks. A disk can be specified by a  full
+           path,  or  it  can be a shorthand name (the relative portion of the
+           path under "/dev/dsk"). A whole disk can be specified  by  omitting
+           the  slice  or  partition  designation.  For  example,  "c0t0d0" is
+           equivalent to "/dev/dsk/c0t0d0s2". When given  a  whole  disk,  ZFS
+           automatically labels the disk, if necessary.
+
+       file
+
+           A  regular  file.  The  use of files as a backing store is strongly
+           discouraged. It is designed primarily for experimental purposes, as
+           the fault tolerance of a file is only as good as the file system of
+           which it is a part. A file must be specified by a full path.
+
+       mirror
+
+           A mirror of two or more devices. Data is replicated in an identical
+           fashion across all components of a mirror. A mirror with N disks of
+           size X can hold X bytes and can  withstand  (N-1)  devices  failing
+           before data integrity is compromised.
+
+       raidz
+       raidz1
+       raidz2
+       raidz3
+
+           A variation on RAID-5 that allows for better distribution of parity
+           and eliminates the "RAID-5 write hole" (in which  data  and  parity
+           become inconsistent after a power loss). Data and parity is striped
+           across all disks within a raidz group.
+
+           A raidz group can have single-, double- , or triple parity, meaning
+           that  the  raidz  group  can  sustain  one, two, or three failures,
+           respectively,  without  losing  any  data.  The  raidz1  vdev  type
+           specifies  a  single-parity  raidz  group;  the  raidz2  vdev  type
+           specifies a double-parity raidz group; and  the  raidz3  vdev  type
+           specifies  a  triple-parity  raidz group. The raidz vdev type is an
+           alias for raidz1.
+
+           A raidz group with N disks of size X with P parity disks  can  hold
+           approximately  (N-P)*X  bytes and can withstand P device(s) failing
+           before data integrity is compromised. The minimum number of devices
+           in  a  raidz group is one more than the number of parity disks. The
+           recommended number is between 3 and 9 to help increase performance.
+
+       spare
+
+           A special pseudo-vdev which keeps track of available hot spares for
+           a pool. For more information, see the "Hot Spares" section.
+
+       log
+
+           A  separate-intent  log  device.  If  more  than  one log device is
+           specified, then  writes  are  load-balanced  between  devices.  Log
+           devices  can  be  mirrored.  However,  raidz  vdev  types  are  not
+           supported for the intent log. For more information, see the "Intent
+           Log" section.
+
+       cache
+
+           A  device used to cache storage pool data. A cache device cannot be
+           configured as a mirror or raidz group. For  more  information,  see
+           the "Cache Devices" section.
+
+       Virtual  devices  cannot be nested, so a mirror or raidz virtual device
+       can  only  contain  files  or  disks.  Mirrors  of  mirrors  (or  other
+       combinations) are not allowed.
+
+       A  pool  can  have  any  number  of  virtual  devices at the top of the
+       configuration (known as "root vdevs"). Data is dynamically  distributed
+       across  all  top-level  devices  to  balance data among devices. As new
+       virtual devices are added, ZFS automatically places data on  the  newly
+       available devices.
+
+       Virtual  devices  are  specified  one  at  a  time on the command line,
+       separated by whitespace. The keywords "mirror" and "raidz" are used  to
+       distinguish  where  a  group  ends and another begins. For example, the
+       following creates two root vdevs, each a mirror of two disks:
+
+         # zpool create mypool mirror c0t0d0 c0t1d0 mirror c1t0d0 c1t1d0
+

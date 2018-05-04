@@ -1,19 +1,42 @@
 ---
-- name: manage_zfs | checking existing zpool(s)
+
+- name    : "DEBUG: dump environment variables"
+  template:
+    src: debugging/dump_environment_vars.j2
+    dest: /tmp/ansible_environment_vars.json
+
+- name: manage_zfs | zpool list
   shell: "zpool list | awk 'FNR >1' | awk '{print $1}'"
   changed_when: false
   register: zpools
   check_mode: no
   when: zfs_pools is defined
 
-- name: manage_zfs | Gather ZPool Status
+- name: "DEBUG: zpools var"
+  debug: var=zpools
+
+- name: manage_zfs | zpool status
   shell: zpool status
   changed_when: false
   register: zpool_devices
   check_mode: no
   when: zfs_pools is defined
 
-- name: manage_zfs | creating basic zpool(s)
+- name: "DEBUG: zpool_devices var"
+  debug: var=zpool_devices
+
+- name: "DEBUG: zpool_devices.stdout value"
+  debug: var=zpool_devices.stdout
+
+## zpool create
+
+- name: "DEBUG: zfs_pools"
+  debug: var=zfs_pools
+
+- name: "DEBUG: zfs_create_pools"
+  debug: var=zfs_create_pools
+
+- name: "manage_zfs | zpool(s) create basic"
   command: "zpool create {{ item.options | join (' ') if item.options is defined else '' }} {{ item.name }} {{ item.devices|join (' ') }}"
   register: zpool_created
   with_items: "{{ zfs_pools }}"
@@ -26,7 +49,10 @@
         item.devices[0] not in zpool_devices.stdout and
         item.action|lower == "create"
 
-- name: manage_zfs | adding basic zpool(s)
+- name: "DEBUG: value of zpool_created"
+  debug: var=zpool_created
+
+- name: "manage_zfs | zpool add basic"
   command: "zpool add {{ item.options | join (' ') if item.options is defined else '' }} {{ item.name }} {{ item.devices|join (' ') }}"
   with_items: "{{ zfs_pools }}"
   when: >
@@ -50,6 +76,9 @@
         item.state == "present") and
         item.devices[0] not in zpool_devices.stdout and
         item.action|lower == "create"
+
+- name: "DEBUG: value of zpool_created"
+  debug: var=zpool_created
 
 - name: manage_zfs | adding mirror/zraid zpool(s)
   command: "zpool add {{ item.options | join (' ') if item.options is defined else '' }} {{ item.name }} {{ item.type }} {{ item.devices|join (' ') }}"
