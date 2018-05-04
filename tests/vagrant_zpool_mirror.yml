@@ -31,8 +31,8 @@
   gather_facts: true
   vars:
 
-    - zfs_create_pools: true
-#    - zfs_create_force: true
+    - zfs_create_pools: false
+    - zfs_create_force: true
 
     - zfs_iscsistarget_enable: false
     - zfs_iscsistarget_iqn: iqn.2001-04.local.vagrant  #define your FQDN in reverse...(local.vagrant)
@@ -52,11 +52,9 @@
     #    atime: 'on'
         compression: 'lz4'
         devices:  #define devices to create pool with...can define multiple by | sdb sdc sdd sde sdf | all on one line w/spaces
-          - 'raidz2 /dev/sdb /dev/sdc /dev/sdd /dev/sde /dev/sdf /dev/sdg /dev/sdh'
-          - 'raidz2 /dev/sdi /dev/sdj /dev/sdk /dev/sdl /dev/sdm /dev/sdn /dev/sdo'
-          - 'raidz2 /dev/sdp /dev/sdq /dev/sdr /dev/sds /dev/sdt /dev/sdu /dev/sdv'
-          - 'spare /dev/sdw'
-        type: basic  #define pool type... | basic (no-raid) | mirror | raidz | raidz2 | raidz3
+          - '/dev/sdb'
+          - '/dev/sdc'
+        type: mirror  #define pool type... | basic (no-raid) | mirror | raidz | raidz2 | raidz3
         state: present
 
   roles:

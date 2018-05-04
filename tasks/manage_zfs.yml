@@ -2,8 +2,8 @@
 
 - name    : "DEBUG: dump environment variables"
   template:
-    src: debugging/dump_environment_vars.j2
-    dest: /tmp/ansible_environment_vars.json
+    src    : debug/dump_environment_vars_2_json.j2
+    dest   : /tmp/ansible_environment_vars.json
 
 - name: manage_zfs | zpool list
   shell: "zpool list | awk 'FNR >1' | awk '{print $1}'"
@@ -64,33 +64,38 @@
         item.action|lower == "add" and
         (zpool_created.changed or item.name in zpools.stdout)
 
-- name: manage_zfs | creating mirror/zraid zpool(s)
-  command: "zpool create {{ item.options | join (' ') if item.options is defined else '' }} {{ item.name }} {{ item.type }} {{ item.devices|join (' ') }}"
-  with_items: "{{ zfs_pools }}"
-  register: zpool_created
-  when: >
-        zfs_pools is defined and
-        zfs_create_pools and
-        (item.type != "basic" and
-        item.name not in zpools.stdout and
-        item.state == "present") and
-        item.devices[0] not in zpool_devices.stdout and
-        item.action|lower == "create"
+#- name: manage_zfs | creating mirror/zraid zpool(s)
+#  command: "zpool create {{ item.options | join (' ') if item.options is defined else '' }} {{ item.name }} {{ item.type }} {{ item.devices|join (' ') }}"
+#  with_items: "{{ zfs_pools }}"
+#  register: zpool_created
+#  when: >
+#        zfs_pools is defined and
+#        zfs_create_pools and
+#        (item.type != "basic" and
+#        item.name not in zpools.stdout and
+#        item.state == "present") and
+#        item.devices[0] not in zpool_devices.stdout and
+#        item.action|lower == "create"
 
-- name: "DEBUG: value of zpool_created"
-  debug: var=zpool_created
+#- name: "DEBUG: value of zpool_created"
+#  debug: var=zpool_created
 
-- name: manage_zfs | adding mirror/zraid zpool(s)
-  command: "zpool add {{ item.options | join (' ') if item.options is defined else '' }} {{ item.name }} {{ item.type }} {{ item.devices|join (' ') }}"
-  with_items: "{{ zfs_pools }}"
-  when: >
-        zfs_pools is defined and
-        zfs_create_pools and
-        (item.type != "basic" and
-        item.state == "present") and
-        item.devices[0] not in zpool_devices.stdout and
-        item.action|lower == "add" and
-        (zpool_created.changed or item.name in zpools.stdout)
+
+# Adds the specified virtual devices to the given pool.
+# The vdev specification is described in the "Virtual Devices" section.
+# The behavior of the -f option, and the device checks performed are described in the "zpool create" subcommand.
+#
+#- name: manage_zfs | adding mirror/zraid zpool(s)
+#  command: "zpool add {{ item.options | join (' ') if item.options is defined else '' }} {{ item.name }} {{ item.type }} {{ item.devices|join (' ') }}"
+#  with_items: "{{ zfs_pools }}"
+#  when: >
+#        zfs_pools is defined and
+#        zfs_create_pools and
+#        (item.type != "basic" and
+#        item.state == "present") and
+#        item.devices[0] not in zpool_devices.stdout and
+#        item.action|lower == "add" and
+#        (zpool_created.changed or item.name in zpools.stdout)
 
 - name: manage_zfs | managing pools
   zfs:
