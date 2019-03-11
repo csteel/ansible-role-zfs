@@ -111,7 +111,8 @@
   apt_repository:
     repo: ppa:bob-ziuchkovski/zfs-auto-snapshot
     state: present
-  when: zfs_enable_auto_snapshots
+  when: zfs_enable_auto_snapshots and
+        ansible_distribution_version == '16.04'
 
 - name: ubuntu | Installing ZFS-Auto-Snapshot
   apt:

@@ -2,7 +2,8 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|  
-  config.vm.box = "geerlingguy/ubuntu1604"
+#  config.vm.box = "geerlingguy/ubuntu1604"
+  config.vm.box = "geerlingguy/ubuntu1804"
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -37,70 +38,70 @@ Vagrant.configure(2) do |config|
 
     # Building disk files if they don't exist
     if not File.exists?(ZFS_DISK_01)
-      vb.customize ['createhd', '--filename', ZFS_DISK_01, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_01, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_02)
-      vb.customize ['createhd', '--filename', ZFS_DISK_02, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_02, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_03)
-      vb.customize ['createhd', '--filename', ZFS_DISK_03, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_03, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_04)
-      vb.customize ['createhd', '--filename', ZFS_DISK_04, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_04, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_05)
-      vb.customize ['createhd', '--filename', ZFS_DISK_05, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_05, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_06)
-      vb.customize ['createhd', '--filename', ZFS_DISK_06, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_06, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_07)
-      vb.customize ['createhd', '--filename', ZFS_DISK_07, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_07, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_08)
-      vb.customize ['createhd', '--filename', ZFS_DISK_08, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_08, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_09)
-      vb.customize ['createhd', '--filename', ZFS_DISK_09, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_09, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_10)
-      vb.customize ['createhd', '--filename', ZFS_DISK_10, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_10, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_11)
-      vb.customize ['createhd', '--filename', ZFS_DISK_11, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_11, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_12)
-      vb.customize ['createhd', '--filename', ZFS_DISK_12, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_12, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_13)
-      vb.customize ['createhd', '--filename', ZFS_DISK_13, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_13, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_14)
-      vb.customize ['createhd', '--filename', ZFS_DISK_14, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_14, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_15)
-      vb.customize ['createhd', '--filename', ZFS_DISK_15, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_15, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_16)
-      vb.customize ['createhd', '--filename', ZFS_DISK_16, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_16, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_17)
-      vb.customize ['createhd', '--filename', ZFS_DISK_17, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_17, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_18)
-      vb.customize ['createhd', '--filename', ZFS_DISK_18, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_18, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_19)
-      vb.customize ['createhd', '--filename', ZFS_DISK_19, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_19, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_20)
-      vb.customize ['createhd', '--filename', ZFS_DISK_20, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_20, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_21)
-      vb.customize ['createhd', '--filename', ZFS_DISK_21, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_21, '--variant', 'Fixed', '--size', 1 * 1024]
     end
     if not File.exists?(ZFS_DISK_22)
-      vb.customize ['createhd', '--filename', ZFS_DISK_22, '--variant', 'Fixed', '--size', 10 * 1024]
+      vb.customize ['createhd', '--filename', ZFS_DISK_22, '--variant', 'Fixed', '--size', 1 * 1024]
       # Adding a SATA controller that allows 4 hard drives
       vb.customize ['storagectl', :id, '--name', 'SATA Controller', '--add', 'sata', '--portcount', 30]
       # Attaching the disks using the SATA controller
